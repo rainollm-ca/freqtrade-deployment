@@ -63,6 +63,9 @@ services:
       - WS_TOKEN=${WS_TOKEN}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - SERVICE_FQDN_FREQTRADE_8080=https://freqtrade.rainomotion.com
+    labels:
+      - traefik.http.services.freqtrade.loadbalancer.server.port=8080
 
 volumes:
   freqtrade-data:
