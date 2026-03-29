@@ -10,11 +10,11 @@ services:
     ports:
       - "8080:8080"
     entrypoint: /bin/sh
-    command: 
+    command:
       - -c
       - |
-        mkdir -p /freqtrade/user_data/logs
-        cat > /freqtrade/user_data/config.json << 'EOFCONFIG'
+        mkdir -p /freqtrade/user_data/logs /freqtrade/user_data/strategies
+        cat > /freqtrade/user_data/config.json << EOFCONFIG
         {
           "max_open_trades": 3,
           "stake_currency": "USDT",
@@ -57,13 +57,12 @@ services:
         EOFCONFIG
         exec freqtrade trade --logfile /freqtrade/user_data/logs/freqtrade.log --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite --config /freqtrade/user_data/config.json --strategy SampleStrategy
     environment:
-      - SERVICE_FQDN_FREQTRADE_8080=https://freqtrade.rainomotion.com
-      - API_USERNAME
-      - API_PASSWORD
-      - JWT_SECRET_KEY
-      - WS_TOKEN
-      - TELEGRAM_BOT_TOKEN
-      - TELEGRAM_CHAT_ID
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - WS_TOKEN=${WS_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
 
 volumes:
   freqtrade-data:
